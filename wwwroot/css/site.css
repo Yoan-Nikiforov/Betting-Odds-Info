@@ -100,6 +100,7 @@ body {
 
     .additional-markets.open {
         max-height: max-content;
+        padding-bottom: 20px;
     }
 
 .odds-additional {
@@ -145,11 +146,10 @@ body {
     color: #00bfff;
     text-align: center;
     background-color: #2a2e3a;
-    padding-top: 20px;
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    width: 30%;
+    width: 20%;
     justify-self: center;
 }
 

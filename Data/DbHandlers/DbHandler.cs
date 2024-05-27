@@ -12,10 +12,10 @@ namespace UltraPlayTask.Data.DbHandlers
         public List<Sport> GetSports()
         {
             return _context.Sports.Include(s => s.Events)
-                                  .ThenInclude(e => e.Matches)
-                                  .ThenInclude(m => m.Bets)
-                                  .ThenInclude(b => b.Odds)
-                                  .ToList();
+            .ThenInclude(e => e.Matches)
+            .ThenInclude(m => m.Bets)
+            .ThenInclude(b => b.Odds)
+            .ToList();
         }
 
         public void SyncSport(Sport newSport)
@@ -78,12 +78,11 @@ namespace UltraPlayTask.Data.DbHandlers
                             {
                                 newOdd.BetID = existingBet.ID;
                                 existingBet.Odds.Add(newOdd);
+                                continue;
                             }
-                            else
-                            {
-                                newOdd.BetID = existingOdd.BetID;
-                                DetachAndUpdate(existingOdd, newOdd);
-                            }
+
+                            newOdd.BetID = existingOdd.BetID;
+                            DetachAndUpdate(existingOdd, newOdd);
                         }
                     }
                 }

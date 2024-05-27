@@ -13,12 +13,12 @@
 </head>
 <body>
     <div class="wrapper">
-        @if (Model != null)
+        @if (Model != null && Model.Bets != null)
         {
             var matchWinnerBet = Model.Bets.FirstOrDefault(x => x.Name == PreviewBetTypes.MatchWinnerBetName);
             Model.Bets.Remove(matchWinnerBet);
-            var matchWinnerFirstTeamOdd = matchWinnerBet.Odds?.FirstOrDefault()?.Value;
-            var matchWinnerSecondTeamOdd = matchWinnerBet.Odds?.Skip(1)?.FirstOrDefault()?.Value;
+            var matchWinnerFirstTeamOdd = matchWinnerBet?.Odds?.FirstOrDefault()?.Value;
+            var matchWinnerSecondTeamOdd = matchWinnerBet?.Odds?.Skip(1)?.FirstOrDefault()?.Value;
             var topBets = Model.Bets.OrderByDescending(x => x.HasSpecialOdds);
 
 

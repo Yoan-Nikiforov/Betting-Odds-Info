@@ -1,12 +1,9 @@
-﻿@using UltraPlayTask.ViewModels
+﻿@using UltraPlayTask.Business.Constants
+@using UltraPlayTask.ViewModels
 @using UltraPlayTask.Business.Enums
 @model List<SportViewModel>
 @{
     int oddsCounter = 0;
-    const string matchWinnerBetName = "Match Winner";
-    const string mapAdvantageBetName = "Map Advantage";
-    const string totalMapsPlayedBetName = "Total Maps Played";
-    List<string> allBets = new List<string> { matchWinnerBetName, mapAdvantageBetName, totalMapsPlayedBetName };
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -30,10 +27,10 @@
                             <div class="container">
                                 @foreach (var match in sportEvent.Matches)
                                 {
-                                    var matchWinnerBetOdds = match.Bets.FirstOrDefault(x => x.Name == matchWinnerBetName)?.Odds;
-                                    match.Bets = match.Bets.Where(x => x.Name != matchWinnerBetName).ToList();
-                                    var matchWinnerFirstTeamOdd = matchWinnerBetOdds?.FirstOrDefault()?.Value;
-                                    var matchWinnerSecondTeamOdd = matchWinnerBetOdds?.Skip(1)?.FirstOrDefault()?.Value;
+                                    var matchWinnerBet = match.Bets.FirstOrDefault(x => x.Name == PreviewBetTypes.MatchWinnerBetName);
+                                    match.Bets.Remove(matchWinnerBet);
+                                    var matchWinnerFirstTeamOdd = matchWinnerBet?.Odds?.FirstOrDefault()?.Value;
+                                    var matchWinnerSecondTeamOdd = matchWinnerBet?.Odds?.Skip(1)?.FirstOrDefault()?.Value;
                                     var topBets = match.Bets.OrderByDescending(x => x.HasSpecialOdds);
 
                                     <div class="match">
@@ -162,13 +159,8 @@
                                                 </div>
                                                 oddsCounter = 0;
                                             }
-
                                         }
-
-                                        @if (match.BetsCount > 5)
-                                        {
-                                            <a class="show-more-btn" href="@Url.Action("Match","Home", new {matchId = match.Id})" target="_self">Show All @match.BetsCount Markets ↗</a>
-                                        }
+                                        <a class="show-more-btn" href="@Url.Action("Match","Home", new {matchId = match.Id})" target="_self">Show All @match.Bets.Count() Markets ↗</a>
                                     </div>
                                 }
                             </div>

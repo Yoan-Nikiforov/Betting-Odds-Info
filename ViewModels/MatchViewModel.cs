@@ -19,6 +19,5 @@ namespace UltraPlayTask.ViewModels
         public string StartDate { get; set; }
         public string MatchType { get; set; }
         public List<BetViewModel> Bets { get; set; }
-        public int BetsCount => Bets.Count();
     }
 }

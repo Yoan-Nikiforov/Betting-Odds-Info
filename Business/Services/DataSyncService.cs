@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using UltraPlayTask.Business.Constants;
+﻿using UltraPlayTask.Business.Constants;
 using UltraPlayTask.Business.Helpers;
 using UltraPlayTask.Business.Services.Contracts;
 using UltraPlayTask.Data.DbHandlers;
@@ -66,7 +65,7 @@ namespace UltraPlayTask.Business.Services
             {
                 if (entityToUpdate == null)
                 {
-                    _logger.LogWarning(string.Format(LoggingConstants.UnsuccsessfullDataFetchMsg, nameof(SyncData)));
+                    _logger.LogError(string.Format(LoggingConstants.UnsuccsessfullDataFetchMsg, nameof(SyncData)));
                     return;
                 }
 
@@ -104,7 +103,7 @@ namespace UltraPlayTask.Business.Services
 
         }
 
-        private static Sport? RemoveOutrightMatches(Sport data)
+        private static Sport RemoveOutrightMatches(Sport data)
         {
             data.Events = data.Events.Select(e => new Event
             {
