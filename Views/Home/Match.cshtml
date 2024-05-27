@@ -1,0 +1,153 @@
+﻿@using UltraPlayTask.Business.Constants
+@using UltraPlayTask.ViewModels
+@model MatchViewModel
+@{
+    int oddsCounter = 0;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Odds</title>
+</head>
+<body>
+    <div class="wrapper">
+        @if (Model != null)
+        {
+            var matchWinnerBet = Model.Bets.FirstOrDefault(x => x.Name == PreviewBetTypes.MatchWinnerBetName);
+            Model.Bets.Remove(matchWinnerBet);
+            var matchWinnerFirstTeamOdd = matchWinnerBet.Odds?.FirstOrDefault()?.Value;
+            var matchWinnerSecondTeamOdd = matchWinnerBet.Odds?.Skip(1)?.FirstOrDefault()?.Value;
+            var topBets = Model.Bets.OrderByDescending(x => x.HasSpecialOdds);
+
+
+            <div class="match">
+                <div class="odds-container">
+                    <div class="match-status">@Model.MatchType</div>
+                    <div class="teams-wrapper">
+                        <div class="team">
+                            <img src="~/icons/team1.png" width="40">
+                            <div>@Model.FirstTeamName</div>
+                            <div class="odds">@matchWinnerFirstTeamOdd</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="odds">@matchWinnerSecondTeamOdd</div>
+                            <img src="~/icons/team2.png" width="40">
+                            <div>@Model.SecondTeamName</div>
+                        </div>
+                    </div>
+                    <div class="date">Starts @Model.StartDate</div>
+                </div>
+            </div>
+            <div class="additional-markets open">
+                @foreach (var bet in topBets)
+                {
+                    @if (bet.HasSpecialOdds)
+                    {
+                        @foreach (var specialOddGroup in bet.SpecialOdds)
+                        {
+                            <div class="market">
+                                <div>@bet.Name</div>
+                                <div class="teams-additional">
+                                    @foreach (var odd in specialOddGroup)
+                                    {
+                                        oddsCounter++;
+                                        var nameToDisplay = $"{(odd.Name == "1" ? Model.SecondTeamName : (odd.Name == "2" ? Model.FirstTeamName : odd.Name))} {specialOddGroup.Key}";
+
+                                        if (oddsCounter % 2 == 1)
+                                        {
+                                            <div class="team-additional">
+                                                <div class="odd-name">@nameToDisplay</div>
+                                                <div class="odds-additional">@odd.Value</div>
+                                            </div>
+                                            <div class="vs">VS</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="team-additional">
+                                                <div class="odds-additional">@odd.Value</div>
+                                                <div class="odd-name">@nameToDisplay</div>
+                                            </div>
+
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            oddsCounter = 0;
+                        }
+                    }
+                    else
+                    {
+
+                        <div class="market">
+                            <div>@bet.Name</div>
+                            <div class="teams-additional">
+                                @if (bet.Odds.Count % 2 == 0)
+                                {
+                                    @foreach (var odd in bet.Odds)
+                                    {
+                                        oddsCounter++;
+                                        var nameToDisplay = odd.Name == "1" ? Model.SecondTeamName : (odd.Name == "2" ? Model.FirstTeamName : odd.Name);
+
+                                        if (oddsCounter % 2 == 1)
+                                        {
+                                            <div class="team-additional">
+                                                <div class="odd-name">@nameToDisplay</div>
+                                                <div class="odds-additional">@odd.Value</div>
+                                            </div>
+                                            <div class="vs">VS</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="team-additional">
+                                                <div class="odds-additional">@odd.Value</div>
+                                                <div class="odd-name">@nameToDisplay</div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    @foreach (var odd in bet.Odds)
+                                    {
+                                        oddsCounter++;
+                                        var nameToDisplay = odd.Name == "1" ? Model.SecondTeamName : (odd.Name == "2" ? Model.FirstTeamName : odd.Name);
+                                        if (oddsCounter % 2 == 1)
+                                        {
+                                            <div class="team-additional">
+                                                <div class="odd-name">@nameToDisplay</div>
+                                                <div class="odds-additional">@odd.Value</div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            if (odd.Name.ToLower() == "x")
+                                            {
+                                                <div class="team-additional">
+                                                    <div class="odds-additional">@odd.Value</div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="team-additional">
+                                                    <div class="odds-additional">@odd.Value</div>
+                                                    <div class="odd-name">@nameToDisplay</div>
+                                                </div>
+                                            }
+
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                        oddsCounter = 0;
+                    }
+
+                }
+                <a class="show-more-btn" href="@Url.Action("Index","Home")" target="_self">Back</a>
+            </div>
+        }
+</body>
+</html>

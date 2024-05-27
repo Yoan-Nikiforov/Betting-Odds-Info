@@ -1,0 +1,216 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #121821;
+    color: #fff;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.container {
+    margin: auto;
+    padding: 20px;
+}
+
+.event {
+    border: 5px solid #1b1f2a;
+    border-radius: 10px;
+}
+
+.match {
+    background-color: #1b1f2a;
+    display: grid;
+    border-radius: 10px 10px 10px 10px;
+    height: 60px;
+    width: 100%;
+    margin-bottom: 20px;
+    grid-template-rows: auto 1fr;
+}
+
+    .match.open {
+        height: auto;
+    }
+
+.teams {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.team {
+    display: flex;
+    align-items: center;
+}
+
+    .team img {
+        margin-right: 10px;
+    }
+
+    .team div {
+        white-space: nowrap;
+    }
+
+
+.odds-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.odds {
+    background-color: #2a2e3a;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    width: 60px;
+    margin: 0 10px;
+}
+
+.vs {
+    font-size: 30px;
+    font-family: fantasy;
+    font-style: italic;
+    font-weight: 100;
+    grid-column: 2 / span 2;
+}
+
+.additional-markets {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    margin-top: 10px;
+    transition: max-height 0.5s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+}
+
+    .additional-markets.open {
+        max-height: max-content;
+    }
+
+.odds-additional {
+    background-color: #2a2e3a;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    width: 60px;
+    margin: 0 10px;
+}
+
+.team-additional {
+    display: flex;
+    align-items: center;
+}
+
+.teams-additional {
+    position: relative;
+    left: -10%;
+    width: 80%;
+    justify-content: center;
+    display: flex;
+}
+
+.market {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+    .market div {
+        text-align: center;
+    }
+
+    .market:nth-child(even) {
+        background-color: #1b1f2a;
+    }
+
+.show-more-btn {
+    color: #00bfff;
+    text-align: center;
+    background-color: #2a2e3a;
+    padding-top: 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    justify-self: center;
+}
+
+.event-name {
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.sport-name {
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.odd-name {
+    width: 200px;
+}
+
+    .odd-name:nth-child(even) {
+        text-align: left;
+    }
+
+    .odd-name:nth-child(odd) {
+        text-align: right;
+    }
+
+.reveal-markets-btn {
+    width: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.active {
+    -webkit-transform: rotate(180deg);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.teams-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto auto 1fr;
+    align-items: center;
+}
+
+.vs {
+    grid-column: 3;
+}
+
+.odds {
+    grid-column: 2 / span 2;
+}
+
+.team {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+    .team:last-child {
+        justify-content: flex-start;
+    }
